@@ -18,5 +18,6 @@
 #include "soboldata.h"
 
 void main(){
-    //nothing to return in void main. sha liuliu
+    //hello liuliu. this is tuntun
+    return;
 }
