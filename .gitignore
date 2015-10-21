@@ -1,2 +1,5 @@
 *.o
 *.out
+*.pbxproj
+*.xcuserstate
+.xcscheme
