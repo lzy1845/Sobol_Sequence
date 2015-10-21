@@ -17,7 +17,8 @@
 #include "search.h"
 #include "soboldata.h"
 
-void main(){
+int main(){
     //hello liuliu. this is tuntun
-    return;
+    printf("hello world\n");
+    return 0;
 }
