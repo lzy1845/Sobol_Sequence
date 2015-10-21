@@ -18,5 +18,5 @@
 #include "soboldata.h"
 
 void main(){
- return poly[0]
+    //nothing to return in void main. sha liuliu
 }
