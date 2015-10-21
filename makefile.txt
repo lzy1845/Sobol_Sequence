@@ -1,0 +1,43 @@
+CC = gcc
+OBJECTS = main.o search.o rand.o rank.o
+OBJECTS2 = verify.o sobol.o
+
+
+all: ${OBJECTS} minit.o parse.o
+	${CC} -lm ${OBJECTS} -o search
+	${CC} minit.o -o minit
+	${CC} parse.o -o parse
+
+verify: ${OBJECTS2}
+	${CC} ${OBJECTS2} -o verify
+
+main.o: main.c search.h
+	${CC} -c main.c -o main.o
+
+search.o: search.c search.h
+	${CC} -c search.c -o search.o
+
+rand.o: rand.c rand.h
+	${CC} -c rand.c -o rand.o
+
+rank.o: rank.c rank.h
+	${CC} -c rank.c -o rank.o
+
+minit.o: minit.c
+	${CC} -c minit.c -o minit.o
+
+parse.o: parse.c
+	${CC} -c parse.c -o parse.o
+
+verify.o: verify.c verifydata.h
+	${CC} -c verify.c -o verify.o
+
+sobol.o: sobol.c sobol.h soboldata.h
+	${CC} -c sobol.c -o sobol.o
+
+clean:
+	rm -f *.o core *~
+
+delete:
+	rm -f *.o core *~ search verify verifydata.h soboldata.h parse minit
+
