@@ -14,6 +14,7 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
 #include <malloc/malloc.h>
@@ -421,7 +422,7 @@ void SearchRandom (int numrandom)
     // initialize m and maxM
     for (j = 0; j < degree; j++)
       maxM[j] = 2;
-  
+      printf("checkpoint 1\n");
     // set all of the maxMs
     for (j = 1; j < degree; j++)
       maxM[j] = maxM[j-1] << 1;
@@ -432,7 +433,7 @@ void SearchRandom (int numrandom)
       // for each m in the vector generate an odd number
       for (k = 0; k < degree; k++)
         m[k] = 2 * Rand_RandInt (GenArr, 1, maxM[k]/2) - 1;
-       
+        printf("run criterion\n");
       Criterion (i, m);
     }
   
@@ -646,7 +647,7 @@ void Criterion (int nextdim, int m[MAXDEGREE])
     *(verifydata+currdim-prevdim+((newdim-prevdim)<<1)) = degree;
   }
 
-  return;
+  return;  
 }
 
 // --------------------------------------------------------------------

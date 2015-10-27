@@ -7,7 +7,7 @@
 
 
 #include <stdio.h>
-#include <malloc.h>
+#include <malloc/malloc.h>
 #include <string.h>
 #include "verifydata.h"
 #include "sobol.h"

@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "search.h"
 
 
@@ -90,7 +91,7 @@ int main (int argc, char **argv)
 
   StartSearch (SEARCH_RANDOM, random_nums);
 
-  FinishSearch ("soboldata.h", "verifydata.h");
+  //FinishSearch ("soboldata.h", "verifydata.h");
 
   return (0);
 }
