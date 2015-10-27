@@ -181,8 +181,8 @@ int ReadPolyData (void)
 
   // read in the polys
   for (i = 0; i < newdim; i++)
-    fscanf (infile, "%d", (poly+i)); 
-
+    fscanf (infile, "%d", (poly+i));
+    
   fclose (infile); // close the file
   return (1);
 }
@@ -209,15 +209,14 @@ int ReadMinitData (void)
     return (0);
   }
 
-  memset (minit, 0, sizeof(int)*newdim*maxdegree);
+  memset (minit, 0, sizeof(int)*newdim*maxdegree);//int minit[newdim*maxdegree];
 
   // read the degree
   fscanf (infile, "%d", &degree);
-
+    degree=15;
   // the first row is all ones
   for (i = 0; i < maxdegree; i++)
     *(minit+(i*newdim)) = 1;
-
   // read the rest
   for (i = 1; i < prevdim; i++)
   {
@@ -234,7 +233,7 @@ int ReadMinitData (void)
  
     FillMinit (i, pdegree);
   }
-  
+    
   fclose (infile); // close the file
   return (1);
 }
@@ -422,7 +421,7 @@ void SearchRandom (int numrandom)
     // initialize m and maxM
     for (j = 0; j < degree; j++)
       maxM[j] = 2;
-      printf("checkpoint 1\n");
+
     // set all of the maxMs
     for (j = 1; j < degree; j++)
       maxM[j] = maxM[j-1] << 1;
@@ -432,9 +431,11 @@ void SearchRandom (int numrandom)
     {
       // for each m in the vector generate an odd number
       for (k = 0; k < degree; k++)
-        m[k] = 2 * Rand_RandInt (GenArr, 1, maxM[k]/2) - 1;
-        printf("run criterion\n");
+      {
+          m[k] = 2 * Rand_RandInt (GenArr, 1, maxM[k]/2) - 1;
+      }
       Criterion (i, m);
+        
     }
   
     Rand_ResetStream (GenArr, NextBlock);
@@ -530,7 +531,7 @@ void Criterion (int nextdim, int m[MAXDEGREE])
   if (currdim != nextdim)
   {
     criterion = MAXINT;
-    currdim = nextdim; // set the current dimension to search for
+    currdim = nextdim; // set the current dimension to search for =8
   
     // find the degree of the currdim(th) primative polynomial
     j = *(poly+currdim);
@@ -546,7 +547,6 @@ void Criterion (int nextdim, int m[MAXDEGREE])
     // allocate memory for the matrix
     matrix = (int *) malloc (sizeof(int)*degree);
   }
- 
   initcriterion = 0.0;
   saverank = 0;
   savedim = 0;
@@ -563,24 +563,24 @@ void Criterion (int nextdim, int m[MAXDEGREE])
       for (j = 0; j < degree; j++)
       {
         // compute the known half of the matrix
-        value = *(minit+i+(j*newdim));
+        value = *(minit+i+(j*newdim));//minit[i+j*newdim]
 
         // find the number of bits in value
         k = 31;
-        while (!((value >> k) & 0x1))
+        while (!((value >> k) & 0x1)) //value shift k bits to the right, if the last bit of value>>k is 0, then k--
           k--;
 
         // get rid of the bits that aren't needed
         if (k >= l)
         {
           k -= l;
-          value >>= (k+1);
+          value >>= (k+1); // value = value>>(k+1) = value/2^(k+1)
         }
 
         // shift the value to the left
         while (!((value >> 31) & 0x1))
           value <<= 1;
-    
+
         // store the known half of the matrix
         *(matrix+j) = value;
 
@@ -589,7 +589,7 @@ void Criterion (int nextdim, int m[MAXDEGREE])
  
         // find the number of bits in value
         k = 31;
-        while (!((value >> k) & 0x1))
+        while ((!((value >> k) & 0x1)) && k>0)
           k--;
  
         // get rid of the bits that are not needed
@@ -598,7 +598,7 @@ void Criterion (int nextdim, int m[MAXDEGREE])
           k -= l;
           value >>= (k+1);
         }
- 
+
         // shift the value over to the left
         while (!((value >> 31-l) & 0x1))
           value <<= 1;
@@ -669,7 +669,7 @@ void FillMinit (int dim, int degree)
     for (k = degree-1; k >= 0; k--)
     {
       if ((*(poly+dim) >> k) & 0x1)
-        newminit = newminit ^ (*(minit+dim+((j-(degree-k))*newdim)) << temp);
+        newminit = newminit ^ (*(minit+dim+((j-(degree-k))*newdim)) << temp); //XOR
       temp++;
     }
 
