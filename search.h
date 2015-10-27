@@ -20,6 +20,8 @@ void StartSearch (int method, ...);
 
 void FinishSearch (char *sobolfilename, char *verifyfilename);
 
+void FinishSearch_Res (char *resfilename);
+
 // ---------------------------------------------------------------------
 
 
